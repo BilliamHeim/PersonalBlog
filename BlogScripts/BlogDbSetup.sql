@@ -1,0 +1,27 @@
+USE master
+GO
+
+CREATE DATABASE PersonalBlog
+GO
+
+CREATE TABLE Categories(
+CategoryId INT PRIMARY KEY IDENTITY,
+CategoryName NVARCHAR(50) NOT NULL,
+)
+GO
+
+CREATE TABLE Posts(
+PostId INT PRIMARY KEY IDENTITY,
+PostTitle NVARCHAR(100) NOT NULL,
+PostBody NVARCHAR,
+IsApproved BIT NOT NULL,
+CreatedDate DATETIME2 DEFAULT (GETDATE())
+)
+GO
+
+CREATE TABLE PostCategories(
+PostId INT FOREIGN KEY REFERENCES Posts(PostId),
+CategoryId INT FOREIGN KEY REFERENCES Categories(CategoryId)
+)
+GO
+
