@@ -1,20 +1,12 @@
 USE PersonalBlog
 GO
 
-IF EXISTS(SELECT * FROM sys.tables WHERE Name='Categories')
-DROP TABLE Categories
-GO
-
-IF EXISTS(SELECT * FROM sys.tables WHERE Name='Posts')
-DROP TABLE Posts
+IF EXISTS(SELECT * FROM sys.tables WHERE Name='PostTags')
+DROP TABLE PostTags
 GO
 
 IF EXISTS(SELECT * FROM sys.tables WHERE Name='Tags')
 DROP TABLE Tags
-GO
-
-IF EXISTS(SELECT * FROM sys.tables WHERE Name='PostTags')
-DROP TABLE PostTags
 GO
 
 IF EXISTS(SELECT * FROM sys.tables WHERE Name='Images')
@@ -23,6 +15,14 @@ GO
 
 IF EXISTS(SELECT * FROM sys.tables WHERE Name='PostImages')
 DROP TABLE PostImages
+GO
+
+IF EXISTS(SELECT * FROM sys.tables WHERE Name='Posts')
+DROP TABLE Posts
+GO
+
+IF EXISTS(SELECT * FROM sys.tables WHERE Name='Categories')
+DROP TABLE Categories
 GO
 
 CREATE TABLE Categories(
