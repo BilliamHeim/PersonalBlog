@@ -1,4 +1,4 @@
-namespace PersonalBlogService.Models
+namespace PersonalBlogService.Data.Models
 {
     using System;
     using System.Collections.Generic;

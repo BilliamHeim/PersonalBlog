@@ -1,4 +1,4 @@
-namespace PersonalBlogService.Models
+namespace PersonalBlogService.Data.Models
 {
     using System;
     using System.Collections.Generic;
@@ -6,19 +6,19 @@ namespace PersonalBlogService.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Category
+    public partial class Tag
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Category()
+        public Tag()
         {
             Posts = new HashSet<Post>();
         }
 
-        public int CategoryId { get; set; }
+        public int TagId { get; set; }
 
         [Required]
         [StringLength(50)]
-        public string CategoryName { get; set; }
+        public string TagName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Post> Posts { get; set; }

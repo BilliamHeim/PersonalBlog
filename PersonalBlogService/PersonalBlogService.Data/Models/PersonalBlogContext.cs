@@ -1,9 +1,10 @@
-namespace PersonalBlogService.Models
+namespace PersonalBlogService.Data.Models
 {
     using System;
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using PersonalBlogService.Data.Models;
 
     public partial class PersonalBlogContext : DbContext
     {

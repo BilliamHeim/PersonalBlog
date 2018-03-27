@@ -1,5 +1,6 @@
-namespace PersonalBlogService.Models
+namespace PersonalBlogService.Data.Models
 {
+    using PersonalBlogService.Data.Models;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
