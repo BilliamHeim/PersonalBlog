@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace PersonalBlog.Models.Models
 {
-	public class Tags
-	{
-		[Key]
-		public int TagId { get; set; }
-		public string TagName { get; set; }
+    public class Tags
+    {
+        [Key]
+        public int TagId { get; set; }
+        public string TagName { get; set; }
+
+        public virtual ICollection<Posts> Posts{get;set;}
 	}
 }

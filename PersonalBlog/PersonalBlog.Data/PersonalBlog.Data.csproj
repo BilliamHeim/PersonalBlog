@@ -48,13 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriesRepo.cs" />
+    <Compile Include="ImagesRepo.cs" />
     <Compile Include="Migrations\201803271836456_AddedEntityFramework.cs" />
     <Compile Include="Migrations\201803271836456_AddedEntityFramework.Designer.cs">
       <DependentUpon>201803271836456_AddedEntityFramework.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PersonalBlogEntities.cs" />
+    <Compile Include="PostsRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagsRepo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
