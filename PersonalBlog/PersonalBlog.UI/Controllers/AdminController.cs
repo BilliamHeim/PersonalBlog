@@ -95,7 +95,6 @@ namespace PersonalBlog.UI.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = "Admin")]
-
 		public ActionResult Add(CreateUserVM model)
 		{
 			var userManager = HttpContext.GetOwinContext().GetUserManager<UserManager<AppUser>>();
@@ -112,6 +111,13 @@ namespace PersonalBlog.UI.Controllers
 				}
 			}
 
+			return View();
+		}
+
+		[HttpGet]
+		[Authorize(Roles = "Admin")]
+		public ActionResult Edit(string id)
+		{
 			return View();
 		}
 	}
