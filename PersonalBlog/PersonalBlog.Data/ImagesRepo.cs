@@ -42,10 +42,10 @@ namespace PersonalBlog.Data
         {
             ImageResponse response = new ImageResponse();
 
-            if (image.PostId == 0 || image.PictureData.Count() == 0)
+            if (image.PostId == 0 || string.IsNullOrEmpty(image.ImagePath))
             {
                 response.Success = false;
-                response.Message = "Image data or extension was missing.";
+                response.Message = "Image data or path was missing.";
                 return response;
             }
 
@@ -71,10 +71,10 @@ namespace PersonalBlog.Data
         {
             ImageResponse response = new ImageResponse();
 
-            if (image.PostId == 0 || image.PictureData.Count() == 0)
+            if (image.PostId == 0 || string.IsNullOrEmpty(image.ImagePath))
             {
                 response.Success = false;
-                response.Message = "Image data or extension was missing.";
+                response.Message = "Image data or path was missing.";
                 return response;
             }
 

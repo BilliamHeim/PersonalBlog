@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Reponses\CategoryResponse.cs" />
-    <Compile Include="Reponses\ImageConverterResponse.cs" />
     <Compile Include="Reponses\ImageResponse.cs" />
     <Compile Include="Reponses\PostsResponse.cs" />
     <Compile Include="Reponses\TagsResponse.cs" />
