@@ -1,4 +1,5 @@
-﻿using PersonalBlog.Models.Reponses;
+﻿using PersonalBlog.Models.Models;
+using PersonalBlog.Models.Reponses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +89,95 @@ namespace PersonalBlog.Data
                     response.Success = false;
                     response.Message = ex.Message;
                 }
+            }
+
+            return response;
+        }
+
+        public TagsResponse Add(Tags tag)
+        {
+            TagsResponse response = new TagsResponse();
+
+            if (string.IsNullOrEmpty(tag.TagName) || tag.Posts.Count() < 1)
+            {
+                response.Success = false;
+                response.Message = "Name is required, tag must be associated with at least one post.";
+                return response;
+            }
+
+            try
+            {
+                using (var context=new PersonalBlogEntities())
+                {
+                    context.Tags.Add(tag);
+                    context.SaveChanges();
+                    response.Success = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public TagsResponse Edit(Tags tag)
+        {
+            TagsResponse response = new TagsResponse();
+
+            if (string.IsNullOrEmpty(tag.TagName) || tag.Posts.Count() < 1)
+            {
+                response.Success = false;
+                response.Message = "Name is required, tag must be associated with at least one post.";
+                return response;
+            }
+
+            try
+            {
+                using (var context = new PersonalBlogEntities())
+                {
+                    var toEdit = context.Tags.Where(t => t.TagId == tag.TagId).First();
+                    toEdit = tag;
+                    context.SaveChanges();
+                    response.Success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public TagsResponse Delete(int id)
+        {
+            TagsResponse response = new TagsResponse();
+
+            if (id == 0)
+            {
+                response.Success = false;
+                response.Message = "Tag id was not passed or was null/default.";
+                return response;
+            }
+
+            try
+            {
+                using (var context = new PersonalBlogEntities())
+                {
+                    var toRemove = context.Tags.Where(t => t.TagId == id).First();
+                    context.Tags.Remove(toRemove);
+                    context.SaveChanges();
+                    response.Success = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
             }
 
             return response;

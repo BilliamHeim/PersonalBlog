@@ -6,14 +6,14 @@ namespace PersonalBlog.UI.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class init : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
+    public sealed partial class addingidentity : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addingidentity));
         
         string IMigrationMetadata.Id
         {
-            get { return "201803271730276_init"; }
+            get { return "201803282007007_addingidentity"; }
         }
         
         string IMigrationMetadata.Source

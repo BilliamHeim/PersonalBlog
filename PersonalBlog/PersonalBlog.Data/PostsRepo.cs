@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PersonalBlog.Models.Models;
 using PersonalBlog.Models.Reponses;
 
 namespace PersonalBlog.Data
@@ -144,6 +145,74 @@ namespace PersonalBlog.Data
                     response.Success = false;
                     response.Message = ex.Message;
                 }
+            }
+
+            return response;
+        }
+
+        public PostsResponse Add(Posts post)
+        {
+            PostsResponse response = new PostsResponse();
+
+            try
+            {
+                using (var context = new PersonalBlogEntities())
+                {
+                    context.Posts.Add(post);
+                    context.SaveChanges();
+                    response.Success = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+        
+        public PostsResponse Edit(Posts post)
+        {
+            PostsResponse response = new PostsResponse();
+
+            try
+            {
+                using (var context=new PersonalBlogEntities())
+                {
+                    var toEdit = context.Posts.Where(p => p.PostId == post.PostId).First();
+                    toEdit = post;
+                    context.SaveChanges();
+                    response.Success = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
+            }
+
+            return response;
+        }
+
+        public PostsResponse Delete(int postId)
+        {
+            PostsResponse response = new PostsResponse();
+
+            try
+            {
+                using (var context = new PersonalBlogEntities())
+                {
+                    var toDelete = context.Posts.Where(p => p.PostId == postId).First();
+                    context.Posts.Remove(toDelete);
+                    context.SaveChanges();
+                    response.Success = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.Message;
             }
 
             return response;
