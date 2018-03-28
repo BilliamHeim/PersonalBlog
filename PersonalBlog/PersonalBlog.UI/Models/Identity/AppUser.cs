@@ -8,5 +8,6 @@ namespace PersonalBlog.UI.Models.Identity
 {
 	public class AppUser : IdentityUser
 	{
+		
 	}
 }

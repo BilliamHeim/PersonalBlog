@@ -1,0 +1,10 @@
+﻿
+@{
+    ViewBag.Title = "Panel";
+}
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+{
+    @Html.ActionLink("Manage Accounts", "Accounts", "Admin" , new { @class = "btn btn-primary "})
+}
+

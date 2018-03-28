@@ -1,0 +1,30 @@
+﻿@model IEnumerable<PersonalBlog.UI.Models.UserVM>
+@{
+    ViewBag.Title = "Accounts";
+}
+
+<h2>Accounts</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Roll</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Role</td>
+            </tr>
+        }
+    </tbody>
+</table>
+@*@foreach(var user in Model)
+{
+<div class="col-md-12">
+    <p>@user.UserName</p>
+    <p>@user.Role</p>
+</div>
+}*@
