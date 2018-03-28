@@ -30,9 +30,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,7 +49,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriesManager.cs" />
+    <Compile Include="PostsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagsManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalBlog.Data\PersonalBlog.Data.csproj">
+      <Project>{c128ef5f-968c-4309-8908-c9b3bb0a9861}</Project>
+      <Name>PersonalBlog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersonalBlog.Models\PersonalBlog.Models.csproj">
+      <Project>{151ee38d-ae98-4e66-ad11-e7e0f3bd3edd}</Project>
+      <Name>PersonalBlog.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersonalBlog.UI\PersonalBlog.UI.csproj">
+      <Project>{dd1414aa-a768-4b07-8fdf-e6337fc7884b}</Project>
+      <Name>PersonalBlog.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PersonalBlog.Data
 {
-	class PersonalBlogEntities : DbContext
+	public class PersonalBlogEntities : DbContext
 	{
 		public PersonalBlogEntities()
 		: base("PersonalBlog")
