@@ -9,6 +9,9 @@ namespace PersonalBlog.Data
 {
     public class ImagesRepo
     {
-
+        public ImageResponse GetImage(string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

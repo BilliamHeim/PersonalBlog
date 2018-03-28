@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PersonalBlog.Models.Models
 {
@@ -13,5 +14,6 @@ namespace PersonalBlog.Models.Models
 		public int ImageId { get; set; }
 		public int PostId { get; set; }
 		public string ImagePath { get; set; }
+        public byte[] Picture { get; set; }
 	}
 }

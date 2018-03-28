@@ -18,7 +18,6 @@ namespace PersonalBlog.Data
 		public DbSet<Categories> Categories { get; set; }
 		public DbSet<Images> Images { get; set; }
 		public DbSet<Posts> Posts { get; set; }
-		public DbSet<PostTags> PostTags { get; set; }
 		public DbSet<Tags> Tags { get; set; }
 	}
 }
