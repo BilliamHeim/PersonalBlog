@@ -13,7 +13,7 @@ namespace PersonalBlog.Models.Models
 		[Key]
 		public int ImageId { get; set; }
 		public int PostId { get; set; }
-		public string ImagePath { get; set; }
-        public byte[] Picture { get; set; }
+        public string ImgType { get; set; }
+        public byte[] PictureData { get; set; }
 	}
 }
