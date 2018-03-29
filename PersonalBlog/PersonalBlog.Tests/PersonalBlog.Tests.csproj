@@ -1,16 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\NUnit.3.10.1\build\NUnit.props" Condition="Exists('..\packages\NUnit.3.10.1\build\NUnit.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C128EF5F-968C-4309-8908-C9B3BB0A9861}</ProjectGuid>
+    <ProjectGuid>{7AC69E85-01F1-4567-A375-7DA32E8633BA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PersonalBlog.Data</RootNamespace>
-    <AssemblyName>PersonalBlog.Data</AssemblyName>
+    <RootNamespace>PersonalBlog.Tests</RootNamespace>
+    <AssemblyName>PersonalBlog.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,15 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,31 +46,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CategoriesRepo.cs" />
-    <Compile Include="Migrations\201803271836456_AddedEntityFramework.cs" />
-    <Compile Include="Migrations\201803271836456_AddedEntityFramework.Designer.cs">
-      <DependentUpon>201803271836456_AddedEntityFramework.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="PersonalBlogEntities.cs" />
-    <Compile Include="PostsRepo.cs" />
+    <Compile Include="DataTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TagsRepo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\PersonalBlog.BLL\PersonalBlog.BLL.csproj">
+      <Project>{1b025210-c557-4661-a832-bb3de33a4f5f}</Project>
+      <Name>PersonalBlog.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersonalBlog.Data\PersonalBlog.Data.csproj">
+      <Project>{c128ef5f-968c-4309-8908-c9b3bb0a9861}</Project>
+      <Name>PersonalBlog.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PersonalBlog.Models\PersonalBlog.Models.csproj">
       <Project>{151ee38d-ae98-4e66-ad11-e7e0f3bd3edd}</Project>
       <Name>PersonalBlog.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PersonalBlog.UI\PersonalBlog.UI.csproj">
+      <Project>{0b44c428-a253-4af0-8c21-1946976ea329}</Project>
+      <Name>PersonalBlog.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803271836456_AddedEntityFramework.resx">
-      <DependentUpon>201803271836456_AddedEntityFramework.cs</DependentUpon>
-    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NUnit.3.10.1\build\NUnit.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NUnit.3.10.1\build\NUnit.props'))" />
+  </Target>
 </Project>

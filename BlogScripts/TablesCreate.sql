@@ -9,14 +9,6 @@ IF EXISTS(SELECT * FROM sys.tables WHERE Name='Tags')
 DROP TABLE Tags
 GO
 
-IF EXISTS(SELECT * FROM sys.tables WHERE Name='Images')
-DROP TABLE Images
-GO
-
-IF EXISTS(SELECT * FROM sys.tables WHERE Name='PostImages')
-DROP TABLE PostImages
-GO
-
 IF EXISTS(SELECT * FROM sys.tables WHERE Name='Posts')
 DROP TABLE Posts
 GO
@@ -37,7 +29,8 @@ PostTitle NVARCHAR(100) NOT NULL,
 PostBody NVARCHAR,
 IsApproved BIT NOT NULL,
 CreatedDate DATETIME2 DEFAULT (GETDATE()),
-CategoryId INT FOREIGN KEY REFERENCES Categories(CategoryId)
+CategoryId INT FOREIGN KEY REFERENCES Categories(CategoryId),
+ImageFileName NVARCHAR(100)
 )
 GO
 
@@ -51,12 +44,5 @@ CREATE TABLE PostTags(
 PostId INT NOT NULL FOREIGN KEY REFERENCES Posts(PostId),
 TagId INT FOREIGN KEY REFERENCES Tags(TagId),
 PRIMARY KEY (PostId,TagId)
-)
-GO
-
-CREATE TABLE Images(
-ImageId INT PRIMARY KEY IDENTITY,
-PostId INT FOREIGN KEY REFERENCES Posts(PostId),
-ImagePath NVARCHAR(300) NOT NULL
 )
 GO

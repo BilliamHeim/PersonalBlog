@@ -36,10 +36,10 @@ BEGIN
 	('Other')
 
 	INSERT INTO Posts
-	VALUES('Today''s Youth Don''t Know Good Cartoons', 'You see you little lit af whippersnappers, back in my day in 1996...', 1, '03-29-2018', 5),
-	('Self Driving Cars Wanna Kill Us All', 'Well, a pedistrian got killed by one of these fanct futuristic things. You done did it now Uber, y''all are fucking up...', 1, '03-30-2018', 1),
-	('See Here''s the Thing with Jews', 'I''m not antisemitic, but...', 0, '04-01-2018', 13),
-	('March For Our Lives is a Testament to Our Society', 'Isn''t it odd how we''re having copious school shootings now out of all the times? They''ve spiked in occurences during a time when the political atmosphere is very unstable and divided and the Gun Debate topic is hotter than it''s ever been. The topic needed more fuel for the fire so...', 1, '04-20-2018', 6)
+	VALUES('Today''s Youth Don''t Know Good Cartoons', 'You see you little lit af whippersnappers, back in my day in 1996...', 1, '03-29-2018', 5,'Images/1/boredlookingkidswatchingnickelodeon.jpg'),
+	('Self Driving Cars Wanna Kill Us All', 'Well, a pedistrian got killed by one of these fancy futuristic things. You done did it now Uber, y''all are fucking up...', 1, '03-30-2018', 1,'Images/2/uberlogo.jpg'),
+	('See Here''s the Thing with Jews', 'I''m not antisemitic, but...', 0, '04-01-2018', 13,'Images/3/jewscontrolthemedia.jpg'),
+	('March For Our Lives is a Testament to Our Society', 'Isn''t it odd how we''re having copious school shootings now out of all the times? They''ve spiked in occurences during a time when the political atmosphere is very unstable and divided and the Gun Debate topic is hotter than it''s ever been. The topic needed more fuel for the fire so...', 1, '04-20-2018', 6,'Images/4/ar15.jpg')
 
 	INSERT INTO Tags
 	VALUES('#MeToo'), --1
@@ -74,14 +74,6 @@ BEGIN
 	(2, 8),
 	(2, 16),
 	(2, 17)
-
-	INSERT INTO Images
-	VALUES(1, 'Images/1/boredlookingkidswatchingnickelodeon.jpg'),
-	(2, 'Images/2/uberlogo.jpg'),
-	(2, 'Images/2/genericstockphoto.png'),
-	(3, 'Images/3/jewscontrolthemedia.jpg'),
-	(4, 'Images/4/glock.jpg'),
-	(4, 'Images/4/ar15.jpg')
 
 END
 

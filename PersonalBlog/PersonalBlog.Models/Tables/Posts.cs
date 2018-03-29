@@ -16,6 +16,7 @@ namespace PersonalBlog.Models.Models
 		public bool IsApproved { get; set; }
 		public DateTime CreatedDate { get; set; }
 		public int CategoryId { get; set; }
+        public string ImageFileName { get; set; }
 
         public virtual ICollection<Tags> Tags { get; set; }
 	}

@@ -42,11 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Reponses\CategoryResponse.cs" />
-    <Compile Include="Reponses\ImageResponse.cs" />
     <Compile Include="Reponses\PostsResponse.cs" />
     <Compile Include="Reponses\TagsResponse.cs" />
     <Compile Include="Tables\Categories.cs" />
-    <Compile Include="Tables\Images.cs" />
     <Compile Include="Tables\Posts.cs" />
     <Compile Include="Tables\Tags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

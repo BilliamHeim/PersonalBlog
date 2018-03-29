@@ -52,10 +52,10 @@ namespace PersonalBlog.BLL
             {
                 return repo.GetByTitle(title);
             }
-
             if(context.Posts.FirstOrDefault(p => p.PostTitle == title) == null)
             {
                 var response = new PostsResponse();
+
                 response.Success = false;
                 response.Message = $"There are no posts that have the name of {title}";
                 return response;
@@ -114,7 +114,6 @@ namespace PersonalBlog.BLL
             }
             else
             {
-                post.PostId = context.Posts.Max(p => p.PostId) + 1;
                 response = repo.Add(post);
                 response.Message = $"The post \"{post.PostTitle}\" has been added to the database.";
                 response.Posts.Add(post);
@@ -155,7 +154,6 @@ namespace PersonalBlog.BLL
             }
             else
             {
-                post.PostId = context.Posts.Max(p => p.PostId) + 1;
                 response = repo.Edit(post);
                 response.Message = $"Your changes to \"{post.PostTitle}\" have been saved.";
                 response.Posts.Add(post);
