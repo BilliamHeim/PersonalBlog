@@ -1,4 +1,5 @@
 ﻿using PersonalBlog.Data;
+using PersonalBlog.Models.Models;
 using PersonalBlog.Models.Reponses;
 using System;
 using System.Collections.Generic;
@@ -52,11 +53,62 @@ namespace PersonalBlog.BLL
             {
                 var response = new TagsResponse();
                 response.Success = false;
-                response.Message = "That tag does not have a valid Tag ID.";
+                response.Message = "That tag is not valid.";
                 return response;
             }
 
             return repo.GetById(id);
+        }
+
+        public TagsResponse Add(Tags tag)
+        {
+            var context = new PersonalBlogEntities();
+
+            if (context.Tags.Contains(tag))
+            {
+                var response = new TagsResponse();
+                response.Success = false;
+                response.Message = $"The tag {tag.TagName} already exists in the database.";
+                response.Tags.Add(tag);
+                return response;
+            }
+            else
+            {
+                return repo.Add(tag);
+            }
+        }
+
+        public TagsResponse Edit(Tags tag)
+        {
+            var context = new PersonalBlogEntities();
+
+            if (context.Tags.Contains(tag))
+            {
+                var response = new TagsResponse();
+                response.Success = false;
+                response.Message = $"The tag {tag} already exists in the database.";
+                response.Tags.Add(tag);
+                return response;
+            }
+            else
+            {
+                return repo.Edit(tag);
+            }
+        }
+
+        public TagsResponse Delete(int id)
+        {
+            var context = new PersonalBlogEntities();
+
+            if (context.Tags.FirstOrDefault(t => t.TagId == id) == null)
+            {
+                var response = new TagsResponse();
+                response.Success = false;
+                response.Message = "There is no tag in our database that matches the delete criteria.";
+                return response;
+            }
+
+            return repo.Delete(id);
         }
     }
 }

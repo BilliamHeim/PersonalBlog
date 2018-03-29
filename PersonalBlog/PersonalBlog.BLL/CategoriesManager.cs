@@ -13,28 +13,83 @@ namespace PersonalBlog.BLL
     {
         private CategoriesRepo repo = new CategoriesRepo();
 
-        public string AddCategory(string category)
+        public CategoryResponse Add(Categories category)
         {
-            var response = new CategoryResponse();
+            var context = new PersonalBlogEntities();
             
-            if(string.IsNullOrEmpty(category))
+            if(context.Categories.Contains(category))
             {
+                var response = new CategoryResponse();
                 response.Success = false;
-                response.Message = "Please enter a category name";
+                response.Message = $"The category {category.CategoryName} is already in the database.";
+                return response;
             }
             else
             {
-                response.Success = true;
-                response.Message = $"The category {category} has been saved to the database.";
-                response.Categories.Add(new Categories() { CategoryName = category });
+                return repo.Add(category);
             }
-
-            return response.Message;
         }
 
         public CategoryResponse GetAll()
         {
             return repo.GetAll();
+        }
+
+        public CategoryResponse GetById(int id)
+        {
+            var context = new PersonalBlogEntities();
+
+            if (id == 0)
+            {
+                return repo.GetById(id);
+            }
+
+            if (context.Categories.FirstOrDefault(c => c.CategoryId == id) == null)
+            {
+                var response = new CategoryResponse();
+                response.Success = false;
+                response.Message = "That category is not valid.";
+                return response;
+            }
+
+            return repo.GetById(id);
+        }
+
+        public CategoryResponse Edit(Categories category)
+        {
+            var context = new PersonalBlogEntities();
+
+            if (context.Categories.Contains(category))
+            {
+                var response = new CategoryResponse();
+                response.Success = false;
+                response.Message = $"The category {category.CategoryName} is already in the database.";
+                return response;
+            }
+            else
+            {
+                return repo.Edit(category);
+            }
+        }
+
+        public CategoryResponse Delete(int id)
+        {
+            var context = new PersonalBlogEntities();
+
+            if (id == 0)
+            {
+                return repo.GetById(id);
+            }
+
+            if (context.Categories.FirstOrDefault(c => c.CategoryId == id) == null)
+            {
+                var response = new CategoryResponse();
+                response.Success = false;
+                response.Message = "There is no category in our database that matches the delete criteria.";
+                return response;
+            }
+
+            return repo.Delete(id);
         }
     }
 }
