@@ -6,5 +6,6 @@
 @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
 {
     @Html.ActionLink("Manage Accounts", "Accounts", "Admin" , new { @class = "btn btn-primary "})
+    @Html.ActionLink("Add Account", "Add", "Admin", new { @class = "btn btn-primary"})
 }
 
