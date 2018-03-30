@@ -71,25 +71,5 @@ namespace PersonalBlog.BLL
                 return repo.Edit(category);
             }
         }
-
-        public CategoryResponse Delete(int id)
-        {
-            var context = new PersonalBlogEntities();
-
-            if (id == 0)
-            {
-                return repo.GetById(id);
-            }
-
-            if (context.Categories.FirstOrDefault(c => c.CategoryId == id) == null)
-            {
-                var response = new CategoryResponse();
-                response.Success = false;
-                response.Message = "There is no category in our database that matches the delete criteria.";
-                return response;
-            }
-
-            return repo.Delete(id);
-        }
     }
 }

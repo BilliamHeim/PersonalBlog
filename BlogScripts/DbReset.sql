@@ -74,4 +74,5 @@ BEGIN
 END
 GO
 
-
+EXEC dbo.DbReset
+GO

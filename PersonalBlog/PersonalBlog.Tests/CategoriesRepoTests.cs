@@ -80,7 +80,7 @@ namespace PersonalBlog.Tests
         {
             Category junkCat = repo.GetAll().Categories.First();
             junkCat.CategoryId = 0;
-            junkCat.CategoryName="Pr0n";
+            junkCat.CategoryName = "Pr0n";
 
             CategoryResponse response = repo.Add(junkCat);
             Assert.AreEqual(true, response.Success);
@@ -97,16 +97,6 @@ namespace PersonalBlog.Tests
 
             Assert.AreEqual(true, response.Success);
             Assert.AreEqual("Pr0n", actual.CategoryName);
-        }
-
-        [Test]
-        public void DeleteCat()
-        {
-            CategoryResponse response = repo.Delete(1);
-            CategoryResponse actual = repo.GetById(1);
-
-            Assert.AreEqual(true, response.Success);
-            Assert.AreEqual(false, actual.Success);
         }
     }
 }
