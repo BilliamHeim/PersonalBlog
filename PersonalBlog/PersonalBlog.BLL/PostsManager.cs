@@ -114,6 +114,14 @@ namespace PersonalBlog.BLL
             }
             else
             {
+                TagsRepo tagsRepo = new TagsRepo();
+
+                List<Tag> allTags = tagsRepo.GetAll().Tags.ToList();
+                List<Tag> tagsToAdd = post.Tags.AsEnumerable().Where(t => post.Tags.Any(postTag => postTag.TagName != t.TagName)).ToList();
+                foreach (Tag t in tagsToAdd)
+                {
+                    tagsRepo.Add(t);
+                }
                 response = repo.Add(post);
                 response.Message = $"The post \"{post.PostTitle}\" has been added to the database.";
                 response.Posts.Add(post);
