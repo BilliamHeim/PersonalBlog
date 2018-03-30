@@ -1,6 +1,6 @@
 ﻿using PersonalBlog.Data;
-using PersonalBlog.Models.Models;
 using PersonalBlog.Models.Reponses;
+using PersonalBlog.Models.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -82,7 +82,7 @@ namespace PersonalBlog.BLL
             }
         }
 
-        public PostsResponse Add(Posts post)
+        public PostsResponse Add(Post post)
         {
             var context = new PersonalBlogEntities();
             var response = new PostsResponse();
@@ -122,7 +122,7 @@ namespace PersonalBlog.BLL
             return response;
         }
 
-        public PostsResponse Edit(Posts post)
+        public PostsResponse Edit(Post post)
         {
             var context = new PersonalBlogEntities();
             var response = new PostsResponse();

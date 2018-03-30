@@ -10,11 +10,7 @@ CREATE PROCEDURE DbReset
 AS
 BEGIN
 
-	DELETE FROM Categories
-	DELETE FROM Images
-	DELETE FROM Posts
-	DELETE FROM Tags
-	DELETE FROM PostTags
+	EXEC dbo.TableSetup;
 
 	INSERT INTO Categories
 	VALUES('Tech'),
@@ -76,5 +72,6 @@ BEGIN
 	(2, 17)
 
 END
+GO
 
-EXEC DbReset
+

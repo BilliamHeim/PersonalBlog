@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PersonalBlog.Models.Models;
 using PersonalBlog.Models.Reponses;
+using PersonalBlog.Models.Tables;
 
 namespace PersonalBlog.Data
 {
@@ -19,6 +19,12 @@ namespace PersonalBlog.Data
                 try
                 {
                     response.Categories = context.Categories.ToList();
+                    if (response.Categories.Count == 0)
+                    {
+                        response.Success = false;
+                        response.Message = "Nothing found.";
+                        return response;
+                    }
                     response.Success = true;
                 }
                 catch (Exception ex)
@@ -49,6 +55,12 @@ namespace PersonalBlog.Data
                     response.Categories = context.Categories
                         .Where(c => c.CategoryId == id)
                         .ToList();
+                    if (response.Categories.Count == 0)
+                    {
+                        response.Success = false;
+                        response.Message = "Nothing found.";
+                        return response;
+                    }
                     response.Success = true;
                 }
                 catch (Exception ex)
@@ -61,7 +73,7 @@ namespace PersonalBlog.Data
             }
         }
 
-        public CategoryResponse Add(Categories cat)
+        public CategoryResponse Add(Category cat)
         {
             CategoryResponse response = new CategoryResponse();
 
@@ -90,7 +102,7 @@ namespace PersonalBlog.Data
             return response;
         }
 
-        public CategoryResponse Edit(Categories cat)
+        public CategoryResponse Edit(Category cat)
         {
             CategoryResponse response = new CategoryResponse();
 

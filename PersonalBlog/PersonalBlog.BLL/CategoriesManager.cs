@@ -1,6 +1,6 @@
 ﻿using PersonalBlog.Data;
-using PersonalBlog.Models.Models;
 using PersonalBlog.Models.Reponses;
+using PersonalBlog.Models.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace PersonalBlog.BLL
     {
         private CategoriesRepo repo = new CategoriesRepo();
 
-        public CategoryResponse Add(Categories category)
+        public CategoryResponse Add(Category category)
         {
             var context = new PersonalBlogEntities();
             
@@ -55,7 +55,7 @@ namespace PersonalBlog.BLL
             return repo.GetById(id);
         }
 
-        public CategoryResponse Edit(Categories category)
+        public CategoryResponse Edit(Category category)
         {
             var context = new PersonalBlogEntities();
 

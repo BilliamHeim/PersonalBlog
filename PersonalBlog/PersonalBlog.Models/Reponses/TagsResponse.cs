@@ -1,4 +1,4 @@
-﻿using PersonalBlog.Models.Models;
+﻿using PersonalBlog.Models.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +11,6 @@ namespace PersonalBlog.Models.Reponses
     {
         public bool Success { get; set; }
         public string Message { get; set; }
-        public List<Tags> Tags { get; set; }
+        public List<Tag> Tags { get; set; }
     }
 }

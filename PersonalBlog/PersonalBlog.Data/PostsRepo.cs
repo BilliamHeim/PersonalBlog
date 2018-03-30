@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PersonalBlog.Models.Models;
 using PersonalBlog.Models.Reponses;
+using PersonalBlog.Models.Tables;
 
 namespace PersonalBlog.Data
 {
@@ -21,6 +21,43 @@ namespace PersonalBlog.Data
                     response.Posts = context.Posts
                         .Include("Tags")
                         .ToList();
+                    response.Success = true;
+                }
+                catch (Exception ex)
+                {
+                    response.Success = false;
+                    response.Message = ex.Message;
+                }
+            }
+
+            return response;
+        }
+
+        public PostsResponse GetById(int id)
+        {
+            PostsResponse response = new PostsResponse();
+
+            if (id == 0)
+            {
+                response.Success = false;
+                response.Message = "Post ID was invalid.";
+                return response;
+            }
+
+            using (var context = new PersonalBlogEntities())
+            {
+                try
+                {
+                    response.Posts = context.Posts
+                        .Include("Tags")
+                        .Where(p => p.PostId == id)
+                        .ToList();
+                    if (response.Posts.Count == 0)
+                    {
+                        response.Success = false;
+                        response.Message = "Nothing found.";
+                        return response;
+                    }
                     response.Success = true;
                 }
                 catch (Exception ex)
@@ -52,6 +89,12 @@ namespace PersonalBlog.Data
                         .Include("Tags")
                         .Where(p=>p.Tags.Any(t=>t.TagId==tagId))
                         .ToList();
+                    if (response.Posts.Count == 0)
+                    {
+                        response.Success = false;
+                        response.Message = "Nothing found.";
+                        return response;
+                    }
                     response.Success = true;
                 }
                 catch (Exception ex)
@@ -67,7 +110,7 @@ namespace PersonalBlog.Data
         public PostsResponse GetByApproval(bool isApproved)
         {
             PostsResponse response = new PostsResponse();
-
+            
             using (var context = new PersonalBlogEntities())
             {
                 try
@@ -76,6 +119,12 @@ namespace PersonalBlog.Data
                         .Include("Tags")
                         .Where(p=>p.IsApproved==isApproved)
                         .ToList();
+                    if (response.Posts.Count == 0)
+                    {
+                        response.Success = false;
+                        response.Message = "Nothing found.";
+                        return response;
+                    }
                     response.Success = true;
                 }
                 catch (Exception ex)
@@ -105,8 +154,14 @@ namespace PersonalBlog.Data
                 {
                     response.Posts = context.Posts
                         .Include("Tags")
-                        .Where(p => (p.PostTitle.ToLower())==(title.ToLower()))
+                        .Where(p => (p.PostTitle.ToLower()).Contains(title.ToLower()))
                         .ToList();
+                    if (response.Posts.Count == 0)
+                    {
+                        response.Success = false;
+                        response.Message = "Nothing found.";
+                        return response;
+                    }
                     response.Success = true;
                 }
                 catch (Exception ex)
@@ -138,6 +193,12 @@ namespace PersonalBlog.Data
                         .Include("Tags")
                         .Where(p => p.CategoryId==catId)
                         .ToList();
+                    if (response.Posts.Count == 0)
+                    {
+                        response.Success = false;
+                        response.Message = "Nothing found.";
+                        return response;
+                    }
                     response.Success = true;
                 }
                 catch (Exception ex)
@@ -150,7 +211,7 @@ namespace PersonalBlog.Data
             return response;
         }
 
-        public PostsResponse Add(Posts post)
+        public PostsResponse Add(Post post)
         {
             PostsResponse response = new PostsResponse();
 
@@ -172,7 +233,7 @@ namespace PersonalBlog.Data
             return response;
         }
         
-        public PostsResponse Edit(Posts post)
+        public PostsResponse Edit(Post post)
         {
             PostsResponse response = new PostsResponse();
 
