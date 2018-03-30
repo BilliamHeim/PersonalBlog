@@ -242,20 +242,19 @@ namespace PersonalBlog.Data
                 using (var context=new PersonalBlogEntities())
                 {
                     var toEdit = context.Posts.Where(p => p.PostId == post.PostId).First();
+
                     context.Entry(toEdit).State = System.Data.Entity.EntityState.Modified;
                     toEdit.CreatedDate = post.CreatedDate;
                     toEdit.ImageFileName = post.ImageFileName;
                     toEdit.IsApproved = post.IsApproved;
                     toEdit.CategoryId = post.CategoryId;
                     toEdit.PostBody = post.PostBody;
-                    toEdit.Tags = post.Tags;
+                    toEdit.Tags.Clear();
                     toEdit.PostTitle = post.PostTitle;
 
-                    foreach (Tag t in toEdit.Tags)
-                    {
-                        context.Tags.Add(t);
-                    }
-                    context.Posts.Attach(toEdit);
+                    context.SaveChanges();
+
+                    toEdit.Tags= context.Tags.AsEnumerable().Where(t => post.Tags.Any(postTag => postTag.TagId == t.TagId)).ToList();
                     
                     context.SaveChanges();
                     response.Success = true;

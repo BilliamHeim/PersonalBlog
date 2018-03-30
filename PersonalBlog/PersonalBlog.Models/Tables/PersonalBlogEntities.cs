@@ -22,6 +22,7 @@ namespace PersonalBlog.Models.Tables
                 .HasMany(e => e.Tags)
                 .WithMany(e => e.Posts)
                 .Map(m => m.ToTable("PostTags").MapLeftKey("PostId").MapRightKey("TagId"));
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
