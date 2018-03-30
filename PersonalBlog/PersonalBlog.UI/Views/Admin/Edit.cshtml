@@ -1,0 +1,19 @@
+﻿@model PersonalBlog.UI.Models.Identity.AppUser
+@{
+    ViewBag.Title = "Edit";
+}
+@using (Html.BeginForm("Edit", "Admin", FormMethod.Post))
+{
+<div class="row">
+    <div class="col-md-12">
+        <input id="id" name="id" type="hidden" value="@Model.Id" />
+        @Html.LabelFor(u => u.UserName)
+        @Html.TextBoxFor(u => u.UserName, new { @class = "form-control" })
+    </div>
+    <div class="col-md-12">
+        <input type="text" name="password" class="form-control" placeholder="Leave blank to leave password unchanged" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</div>
+}
+
