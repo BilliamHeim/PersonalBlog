@@ -3,6 +3,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Movie_Catalog.Models.Identity;
+using PersonalBlog.BLL;
+using PersonalBlog.Models.Tables;
 using PersonalBlog.UI.Models;
 using PersonalBlog.UI.Models.Identity;
 using System;
@@ -54,10 +56,7 @@ namespace PersonalBlog.UI.Controllers
 				var identity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
 				authManager.SignIn(new AuthenticationProperties { IsPersistent = model.RememberMe }, identity);
 
-				if (!string.IsNullOrEmpty(returnUrl))
-					return Redirect(returnUrl);
-				else
-					return RedirectToAction("Panel", "Admin");
+				return RedirectToAction("Panel", "Admin");
 			}
 		}
 
@@ -86,7 +85,6 @@ namespace PersonalBlog.UI.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = "Admin")]
-
 		public ActionResult Add()
 		{
 			var model = new CreateUserVM();
@@ -138,7 +136,7 @@ namespace PersonalBlog.UI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles="Admin")]
+		[Authorize(Roles = "Admin")]
 		public ActionResult Edit(AppUser recievedUser, string id, string password)
 		{
 			var userManager = HttpContext.GetOwinContext().GetUserManager<UserManager<AppUser>>();
@@ -154,8 +152,29 @@ namespace PersonalBlog.UI.Controllers
 			{
 				oldUser.UserName = recievedUser.UserName;
 				userManager.Update(oldUser);
-			}			
+			}
 			return RedirectToAction("Accounts", "Admin");
+		}
+
+		[HttpGet]
+		[Authorize(Roles = "Admin")]
+		public ActionResult AddPost()
+		{
+			Post post = new Post();
+			return View(post);
+		}
+
+		[HttpPost, ValidateInput(false)]
+		[Authorize(Roles = "Admin")]
+		public ActionResult AddPost(string title, string body)
+		{
+			Post post = new Post();
+			post.PostTitle = title;
+			post.PostBody = body;
+			
+			PostsManager manager = new PostsManager();
+			manager.Add(post);
+			return RedirectToAction("Index", "Home");
 		}
 	}
 }

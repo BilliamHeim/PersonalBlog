@@ -97,11 +97,11 @@ namespace PersonalBlog.BLL
                 response.Success = false;
                 response.Message = "The post body cannot be left blank";
             }
-            else if (!post.IsApproved)
-            {
-                response.Success = false;
-                response.Message = "This post has content that violates our blogging policy.";
-            }
+            //else if (!post.IsApproved)
+            //{
+            //    response.Success = false;
+            //    response.Message = "This post has content that violates our blogging policy.";
+            //}
             else if (string.IsNullOrEmpty(post.PostBody))
             {
                 response.Success = false;

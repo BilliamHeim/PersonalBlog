@@ -10,7 +10,10 @@ namespace PersonalBlog.UI.Controllers
 	{
 		public ActionResult Index()
 		{
-			return View();
+			BLL.PostsManager postManager = new BLL.PostsManager();
+			var response = postManager.GetAll();
+			var model = response.Posts;
+			return View(model);
 		}
 
 		public ActionResult Search()

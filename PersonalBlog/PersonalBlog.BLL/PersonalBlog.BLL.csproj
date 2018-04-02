@@ -63,10 +63,6 @@
       <Project>{151ee38d-ae98-4e66-ad11-e7e0f3bd3edd}</Project>
       <Name>PersonalBlog.Models</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PersonalBlog.UI\PersonalBlog.UI.csproj">
-      <Project>{dd1414aa-a768-4b07-8fdf-e6337fc7884b}</Project>
-      <Name>PersonalBlog.UI</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

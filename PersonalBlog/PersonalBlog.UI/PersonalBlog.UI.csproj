@@ -247,6 +247,7 @@
     <Content Include="Views\Admin\Add.cshtml" />
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Admin\AddPost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -268,6 +269,16 @@
     <EmbeddedResource Include="Migrations\201803281454547_AddedIdentity.resx">
       <DependentUpon>201803281454547_AddedIdentity.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalBlog.BLL\PersonalBlog.BLL.csproj">
+      <Project>{1b025210-c557-4661-a832-bb3de33a4f5f}</Project>
+      <Name>PersonalBlog.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PersonalBlog.Models\PersonalBlog.Models.csproj">
+      <Project>{151ee38d-ae98-4e66-ad11-e7e0f3bd3edd}</Project>
+      <Name>PersonalBlog.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
