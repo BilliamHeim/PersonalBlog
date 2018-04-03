@@ -8,9 +8,10 @@ namespace PersonalBlog.UI.Models
 {
     public class PostSubmissionVM
     {
-        string Title { get; set; }
-        string Body { get; set; }
-        List<Category> Categories { get; set; }
-        List<Tag> Tags { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }
+		public List<Category> Categories = new List<Category>();
+        public List<Tag> Tags { get; set; }
+		public string Cateogry { get; set; }
     }
 }

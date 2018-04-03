@@ -61,7 +61,7 @@ namespace PersonalBlog.UI.Controllers
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin, Marketing")]
 		public ActionResult Panel()
 		{
 			return View();
@@ -84,7 +84,7 @@ namespace PersonalBlog.UI.Controllers
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin, Marketing")]
 		public ActionResult Add()
 		{
 			var model = new CreateUserVM();
@@ -92,7 +92,7 @@ namespace PersonalBlog.UI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin, Marketing")]
 		public ActionResult Add(CreateUserVM model)
 		{
 			var userManager = HttpContext.GetOwinContext().GetUserManager<UserManager<AppUser>>();
@@ -160,21 +160,53 @@ namespace PersonalBlog.UI.Controllers
 		[Authorize(Roles = "Admin")]
 		public ActionResult AddPost()
 		{
-			Post post = new Post();
-			return View(post);
+			PostSubmissionVM model = new PostSubmissionVM();
+			CategoriesManager manager = new CategoriesManager();
+			var allCategories = manager.GetAll();
+			foreach(var cat in allCategories.Categories)
+			{
+				model.Categories.Add(cat);
+			}
+			return View(model);
 		}
 
 		[HttpPost, ValidateInput(false)]
 		[Authorize(Roles = "Admin")]
-		public ActionResult AddPost(string title, string body)
+		public ActionResult AddPost(PostSubmissionVM post, string Categories)
 		{
-			Post post = new Post();
-			post.PostTitle = title;
-			post.PostBody = body;
-			
+			Post postSubmit = new Post();
+			postSubmit.CategoryId = int.Parse(Categories);
+			postSubmit.PostBody = post.Body;
+			postSubmit.PostTitle = post.Title;
 			PostsManager manager = new PostsManager();
-			manager.Add(post);
+			if (User.IsInRole("Admin"))
+			{
+				postSubmit.IsApproved = true;
+			}
+			else
+			{
+				postSubmit.IsApproved = false;
+			}
+			manager.Add(postSubmit);
 			return RedirectToAction("Index", "Home");
 		}
+
+		[HttpPost]
+		[Authorize(Roles = "Admin")]
+		public ActionResult DeletePost(string id)
+		{
+			PostsManager manager = new PostsManager();
+			manager.Delete(int.Parse(id));
+			return RedirectToAction("Index", "Home");
+		}
+
+		//[HttpGet]
+		//[Authorize(Roles = "Admin")]
+		//public ActionResult EditPost(string id)
+		//{
+		//	PostsManager manager = new PostsManager();
+		//	manager.
+		//	return View();
+		//}
 	}
 }

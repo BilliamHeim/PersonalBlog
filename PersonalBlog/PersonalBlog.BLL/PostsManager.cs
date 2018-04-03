@@ -124,7 +124,6 @@ namespace PersonalBlog.BLL
                 }
                 response = repo.Add(post);
                 response.Message = $"The post \"{post.PostTitle}\" has been added to the database.";
-                response.Posts.Add(post);
             }
 
             return response;
