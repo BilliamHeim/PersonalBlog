@@ -1,11 +1,31 @@
 ﻿
 @{
+
     ViewBag.Title = "Panel";
 }
 
-@if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+
+@if (User.IsInRole("Admin"))
 {
-    @Html.ActionLink("Manage Accounts", "Accounts", "Admin" , new { @class = "btn btn-primary "})
-    @Html.ActionLink("Add Account", "Add", "Admin", new { @class = "btn btn-primary"})
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("Manage Accounts", "Accounts", "Admin", new { @class = "btn btn-primary " })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("Add Account", "Add", "Admin", new { @class = "btn btn-primary" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.ActionLink("Approve Posts", "ApprovePosts", "Admin", new { @class = "btn btn-primary" })
+        </div>
+    </div>
 }
+<div class="row">
+    <div class="col-md-12">
+        @Html.ActionLink("Add Post", "AddPost", "Admin", new { @class = "btn btn-primary" })
+    </div>
+</div>
 

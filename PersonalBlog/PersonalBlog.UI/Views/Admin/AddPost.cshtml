@@ -1,0 +1,14 @@
+﻿@model PersonalBlog.UI.Models.PostSubmissionVM
+@{
+    ViewBag.Title = "AddPost";
+}
+
+@using (Html.BeginForm("AddPost", "Admin", FormMethod.Post))
+{
+    <label for="title">Title: </label>
+    <input type="text" name="title" class="form-control" id="title" />
+    <textarea id="mytextarea" name="body">Hello, World!</textarea>
+    @Html.DropDownListFor(f => f.Categories, new SelectList(Model.Categories, "CategoryId", "CategoryName", "SelectedValue"));
+    <button type="submit" class="btn btn-success">Submit</button>
+}
+

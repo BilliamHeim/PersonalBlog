@@ -3,6 +3,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Movie_Catalog.Models.Identity;
+using PersonalBlog.BLL;
+using PersonalBlog.Models.Tables;
 using PersonalBlog.UI.Models;
 using PersonalBlog.UI.Models.Identity;
 using System;
@@ -54,15 +56,12 @@ namespace PersonalBlog.UI.Controllers
 				var identity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
 				authManager.SignIn(new AuthenticationProperties { IsPersistent = model.RememberMe }, identity);
 
-				if (!string.IsNullOrEmpty(returnUrl))
-					return Redirect(returnUrl);
-				else
-					return RedirectToAction("Panel", "Admin");
+				return RedirectToAction("Panel", "Admin");
 			}
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin, Marketing")]
 		public ActionResult Panel()
 		{
 			return View();
@@ -85,8 +84,7 @@ namespace PersonalBlog.UI.Controllers
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Admin")]
-
+		[Authorize(Roles = "Admin, Marketing")]
 		public ActionResult Add()
 		{
 			var model = new CreateUserVM();
@@ -94,7 +92,7 @@ namespace PersonalBlog.UI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin, Marketing")]
 		public ActionResult Add(CreateUserVM model)
 		{
 			var userManager = HttpContext.GetOwinContext().GetUserManager<UserManager<AppUser>>();
@@ -138,7 +136,7 @@ namespace PersonalBlog.UI.Controllers
 		}
 
 		[HttpPost]
-		[Authorize(Roles="Admin")]
+		[Authorize(Roles = "Admin")]
 		public ActionResult Edit(AppUser recievedUser, string id, string password)
 		{
 			var userManager = HttpContext.GetOwinContext().GetUserManager<UserManager<AppUser>>();
@@ -154,8 +152,113 @@ namespace PersonalBlog.UI.Controllers
 			{
 				oldUser.UserName = recievedUser.UserName;
 				userManager.Update(oldUser);
-			}			
+			}
 			return RedirectToAction("Accounts", "Admin");
+		}
+
+		[HttpGet]
+		[Authorize(Roles = "Admin, Marketing")]
+		public ActionResult AddPost()
+		{
+			PostSubmissionVM model = new PostSubmissionVM();
+			CategoriesManager manager = new CategoriesManager();
+			var allCategories = manager.GetAll();
+			foreach (var cat in allCategories.Categories)
+			{
+				model.Categories.Add(cat);
+			}
+			return View(model);
+		}
+
+		[HttpPost, ValidateInput(false)]
+		[Authorize(Roles = "Admin, Marketing")]
+		public ActionResult AddPost(PostSubmissionVM post, string Categories)
+		{
+			Post postSubmit = new Post();
+			postSubmit.CategoryId = int.Parse(Categories);
+			postSubmit.PostBody = post.Body;
+			postSubmit.PostTitle = post.Title;
+			PostsManager manager = new PostsManager();
+			if (User.IsInRole("Admin"))
+			{
+				postSubmit.IsApproved = true;
+			}
+			else
+			{
+				postSubmit.IsApproved = false;
+			}
+			manager.Add(postSubmit);
+			return RedirectToAction("Index", "Home");
+		}
+
+		[HttpPost]
+		[Authorize(Roles = "Admin")]
+		public ActionResult DeletePost(string id)
+		{
+			PostsManager manager = new PostsManager();
+			manager.Delete(int.Parse(id));
+			return RedirectToAction("Index", "Home");
+		}
+
+		[HttpGet]
+		[Authorize(Roles = "Admin")]
+		public ActionResult EditPost(string id)
+		{
+			PostsManager manager = new PostsManager();
+			var response = manager.GetById(int.Parse(id));
+			if (response.Success)
+			{
+				var model = response.Posts.First();
+				return View(model);
+			}
+			else
+			{
+				return RedirectToAction("Index", "Home");
+			}
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost, ValidateInput(false)]
+		public ActionResult UpdatePost(string id, string title, string body)
+		{
+			PostsManager manager = new PostsManager();
+			var response = manager.GetById(int.Parse(id));
+			var postToUpdate = response.Posts.First();
+			postToUpdate.PostTitle = title;
+			postToUpdate.PostBody = body;
+			manager.Edit(postToUpdate);
+			return RedirectToAction("Index", "Home");
+		}
+
+		[Authorize(Roles = "Admin, Marketing")]
+		[HttpGet]
+		public ActionResult Logout()
+		{
+			var AuthManager = HttpContext.GetOwinContext().Authentication;
+			AuthManager.SignOut();
+			return RedirectToAction("Index", "Home");
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpGet]
+		public ActionResult ApprovePosts()
+		{
+			PostsManager manager = new PostsManager();
+			var response = manager.GetByApproval(false);
+			var model = response.Posts;
+			return View(model);
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost]
+		public ActionResult ApprovePost(string id)
+		{
+			PostsManager manager = new PostsManager();
+			var response = manager.GetById(int.Parse(id));
+			var post = response.Posts.First();
+			post.IsApproved = true;
+			manager.Edit(post);
+			return RedirectToAction("Panel", "Admin");
 		}
 	}
 }

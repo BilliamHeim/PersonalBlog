@@ -18,6 +18,34 @@ namespace PersonalBlog.BLL
             return repo.GetAll();
         }
 
+        public PostsResponse GetById(int id)
+        {
+            PostsResponse response = new PostsResponse();
+            if (id == 0)
+            {
+                response.Success = false;
+                response.Message = "Id value was not passed in.";
+                return response;
+            }
+            try
+            {
+                response = repo.GetById(id);
+                if (response.Posts.Count == 0 || response.Posts.First() == null)
+                {
+                    response.Success = false;
+                    response.Message = "No posts found";
+                }
+                response.Success = true;
+            }
+            catch(Exception ex)
+            {
+                response.Success = true;
+                response.Message = ex.Message;
+            }
+            return response;
+
+        }
+
         public PostsResponse GetByTag(int tagId)
         {
             var context = new PersonalBlogEntities();
@@ -97,11 +125,11 @@ namespace PersonalBlog.BLL
                 response.Success = false;
                 response.Message = "The post cannot have a creation date before the current date.";
             }
-            else if (!post.IsApproved)
-            {
-                response.Success = false;
-                response.Message = "This post has content that violates our blogging policy.";
-            }
+            //else if (!post.IsApproved)
+            //{
+            //    response.Success = false;
+            //    response.Message = "This post has content that violates our blogging policy.";
+            //}
             else if (string.IsNullOrEmpty(post.PostBody))
             {
                 response.Success = false;
@@ -124,7 +152,6 @@ namespace PersonalBlog.BLL
                 }
                 response = repo.Add(post);
                 response.Message = $"The post \"{post.PostTitle}\" has been added to the database.";
-                response.Posts.Add(post);
             }
 
             return response;
@@ -139,11 +166,6 @@ namespace PersonalBlog.BLL
             {
                 response.Success = false;
                 response.Message = "The post title cannot be left blank.";
-            }
-            else if (post.CreatedDate < DateTime.Today.AddDays(1))
-            {
-                response.Success = false;
-                response.Message = "The post body cannot be left blank";
             }
             else if (!post.IsApproved)
             {
@@ -164,7 +186,6 @@ namespace PersonalBlog.BLL
             {
                 response = repo.Edit(post);
                 response.Message = $"Your changes to \"{post.PostTitle}\" have been saved.";
-                response.Posts.Add(post);
             }
 
             return response;
@@ -183,6 +204,35 @@ namespace PersonalBlog.BLL
             }
 
             return repo.Delete(id);
+        }
+
+        public PostsResponse SearchPosts(int tagId,int catId)
+        {
+            PostsResponse response = new PostsResponse();
+            PostsResponse catSearchResult = repo.GetByCategory(catId);
+            PostsResponse tagSearchResult = repo.GetByTag(tagId);
+            if (!(catSearchResult.Success && tagSearchResult.Success))
+            {
+                response.Success = false;
+                response.Message = "No results found for either entered tags or category";
+                return response;
+            }
+            response.Posts = catSearchResult.Posts;
+            foreach (var post in response.Posts)
+            {
+                if (!tagSearchResult.Posts.Contains(post))
+                {
+                    tagSearchResult.Posts.Remove(post);
+                }
+            }
+            foreach(var post in tagSearchResult.Posts)
+            {
+                response.Posts.Add(post);
+            }
+            response.Success = true;
+            return response;
+
+            return response;
         }
     }
 }

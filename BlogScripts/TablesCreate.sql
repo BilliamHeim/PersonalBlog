@@ -16,11 +16,11 @@ DROP TABLE PostTags
 IF EXISTS(SELECT * FROM sys.tables WHERE Name='Tags')
 DROP TABLE Tags
 
-IF EXISTS(SELECT * FROM sys.tables WHERE Name='Posts')
-DROP TABLE Posts
-
 IF EXISTS(SELECT * FROM sys.tables WHERE Name='Categories')
 DROP TABLE Categories
+
+IF EXISTS(SELECT * FROM sys.tables WHERE Name='Posts')
+DROP TABLE Posts
 
 CREATE TABLE Categories(
 CategoryId INT PRIMARY KEY IDENTITY,
