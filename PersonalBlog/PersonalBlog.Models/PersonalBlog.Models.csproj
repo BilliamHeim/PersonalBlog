@@ -30,9 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\PersonalBlog.UI\bin\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,10 +49,12 @@
     <Compile Include="Reponses\CategoryResponse.cs" />
     <Compile Include="Reponses\PostsResponse.cs" />
     <Compile Include="Reponses\TagsResponse.cs" />
-    <Compile Include="Tables\Categories.cs" />
-    <Compile Include="Tables\Posts.cs" />
-    <Compile Include="Tables\Tags.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables\Category.cs" />
+    <Compile Include="Tables\PersonalBlogEntities.cs" />
+    <Compile Include="Tables\Post.cs" />
+    <Compile Include="Tables\Tag.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

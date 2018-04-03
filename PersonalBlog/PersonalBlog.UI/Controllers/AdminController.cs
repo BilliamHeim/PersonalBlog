@@ -15,15 +15,15 @@ using System.Web.Security;
 
 namespace PersonalBlog.UI.Controllers
 {
-    public class AdminController : Controller
-    {
-        // GET: Admin
+	public class AdminController : Controller
+	{
+		// GET: Admin
 		[AllowAnonymous]
-        public ActionResult Login()
-        {
+		public ActionResult Login()
+		{
 			var model = new LoginViewModel();
-            return View(model);
-        }
+			return View(model);
+		}
 
 		[HttpPost]
 		[AllowAnonymous]
@@ -62,7 +62,7 @@ namespace PersonalBlog.UI.Controllers
 		}
 
 		[HttpGet]
-		[Authorize(Roles ="Admin")]
+		[Authorize(Roles = "Admin")]
 		public ActionResult Panel()
 		{
 			return View();
@@ -73,19 +73,19 @@ namespace PersonalBlog.UI.Controllers
 		public ActionResult Accounts()
 		{
 			var context = new PersonalBlogDbContext();
-			var adminRole = (from r in context.Roles where r.Name.Contains("Admin") select r).FirstOrDefault();
-			var adminUsers = context.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(adminRole.Id));
-			var adminVM = adminUsers.Select(user => new UserVM
+			var marketingRole = (from r in context.Roles where r.Name.Contains("Marketing") select r).FirstOrDefault();
+			var marketingUsers = context.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(marketingRole.Id));
+			var adminVM = marketingUsers.Select(user => new UserVM
 			{
 				Id = user.Id,
 				UserName = user.UserName,
-				Role = "Admin"
+				Role = "Marketing"
 			}).ToList();
 			return View(adminVM);
 		}
 
 		[HttpGet]
-		[Authorize(Roles="Admin")]
+		[Authorize(Roles = "Admin")]
 
 		public ActionResult Add()
 		{
@@ -114,11 +114,48 @@ namespace PersonalBlog.UI.Controllers
 			return View();
 		}
 
+		[HttpPost]
+		[Authorize(Roles = "Admin")]
+		public ActionResult Delete(string id)
+		{
+			var userManager = HttpContext.GetOwinContext().GetUserManager<UserManager<AppUser>>();
+			var context = new PersonalBlogDbContext();
+			//var adminRole = (from r in context.Roles where r.Name.Contains("Admin") select r).FirstOrDefault();
+			//var adminUsers = context.Users.Where(u => u.Roles.Select(r => r.RoleId).Contains(adminRole.Id));
+			AppUser userToDelete = userManager.FindById(id);
+			userManager.Delete(userToDelete);
+			return RedirectToAction("Accounts", "Admin");
+		}
+
 		[HttpGet]
 		[Authorize(Roles = "Admin")]
 		public ActionResult Edit(string id)
 		{
-			return View();
+			var userManager = HttpContext.GetOwinContext().GetUserManager<UserManager<AppUser>>();
+			var userToEdit = userManager.FindById(id);
+			var model = userToEdit;
+			return View(model);
+		}
+
+		[HttpPost]
+		[Authorize(Roles="Admin")]
+		public ActionResult Edit(AppUser recievedUser, string id, string password)
+		{
+			var userManager = HttpContext.GetOwinContext().GetUserManager<UserManager<AppUser>>();
+			var oldUser = userManager.FindById(id);
+			if (!string.IsNullOrEmpty(password))
+			{
+				PasswordHasher passwordHasher = new PasswordHasher();
+				oldUser.PasswordHash = passwordHasher.HashPassword(password);
+				oldUser.UserName = recievedUser.UserName;
+				userManager.Update(oldUser);
+			}
+			else
+			{
+				oldUser.UserName = recievedUser.UserName;
+				userManager.Update(oldUser);
+			}			
+			return RedirectToAction("Accounts", "Admin");
 		}
 	}
 }

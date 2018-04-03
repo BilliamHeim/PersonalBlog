@@ -2,6 +2,13 @@
 @{
     ViewBag.Title = "Accounts";
 }
+@*@using (Html.BeginForm())
+    {
+        @Html.HiddenFor(s => s.StudentId)
+        <p>Are you sure that you wish to delete this student @Html.DisplayFor(s => s.FirstName)?</p>
+        <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        @Html.ActionLink("Cancel", "List", "Student")
+    }*@
 
 <h2>Accounts</h2>
 <table class="table table-striped">
@@ -12,20 +19,31 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var user in Model)
+        @foreach (var user in Model)
         {
             <tr>
                 <td>@user.UserName</td>
                 <td>@user.Role</td>
-                <td>@Html.ActionLink("Edit", "Edit", "Admin", new { @class = "btn btn-primary " })</td>
+                <td>
+                    @using (Html.BeginForm("Delete", "Admin", FormMethod.Post))
+                    {
+                        <input id="id" name="id" type="hidden" value="@user.Id" />
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    }
+                    @using (Html.BeginForm("Edit", "Admin", FormMethod.Get))
+                    {
+                        <input id="id" name="id" type="hidden" value="@user.Id" />
+                        <button type="submit" class="btn btn-warning">Edit</button>
+                    }
+                </td>
             </tr>
         }
     </tbody>
 </table>
 @*@foreach(var user in Model)
-{
-<div class="col-md-12">
-    <p>@user.UserName</p>
-    <p>@user.Role</p>
-</div>
-}*@
+    {
+    <div class="col-md-12">
+        <p>@user.UserName</p>
+        <p>@user.Role</p>
+    </div>
+    }*@

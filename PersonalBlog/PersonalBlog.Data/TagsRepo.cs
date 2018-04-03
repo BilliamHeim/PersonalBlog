@@ -1,5 +1,5 @@
-﻿using PersonalBlog.Models.Models;
-using PersonalBlog.Models.Reponses;
+﻿using PersonalBlog.Models.Reponses;
+using PersonalBlog.Models.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +21,12 @@ namespace PersonalBlog.Data
                     response.Tags = context.Tags
                         .Include("Posts")
                         .ToList();
+                    if (response.Tags.Count == 0)
+                    {
+                        response.Success = false;
+                        response.Message = "Nothing found.";
+                        return response;
+                    }
                     response.Success = true;
                 }
                 catch(Exception ex)
@@ -50,8 +56,15 @@ namespace PersonalBlog.Data
                 {
                     response.Tags = context.Tags
                         .Include("Posts")
-                        .Where(t => t.TagName == tag)
+                        .Where(t => (t.TagName.ToLower()).Contains(tag.ToLower()))
                         .ToList();
+                    if (response.Tags.Count==0)
+                    {
+                        response.Success = false;
+                        response.Message = "Nothing found.";
+                        return response;
+                    }
+
                     response.Success = true;
                 }
                 catch (Exception ex)
@@ -82,6 +95,12 @@ namespace PersonalBlog.Data
                         .Include("Posts")
                         .Where(t=>t.TagId==id)
                         .ToList();
+                    if (response.Tags.Count == 0)
+                    {
+                        response.Success = false;
+                        response.Message = "Nothing found.";
+                        return response;
+                    }
                     response.Success = true;
                 }
                 catch (Exception ex)
@@ -94,7 +113,7 @@ namespace PersonalBlog.Data
             return response;
         }
 
-        public TagsResponse Add(Tags tag)
+        public TagsResponse Add(Tag tag)
         {
             TagsResponse response = new TagsResponse();
 
@@ -123,7 +142,7 @@ namespace PersonalBlog.Data
             return response;
         }
 
-        public TagsResponse Edit(Tags tag)
+        public TagsResponse Edit(Tag tag)
         {
             TagsResponse response = new TagsResponse();
 

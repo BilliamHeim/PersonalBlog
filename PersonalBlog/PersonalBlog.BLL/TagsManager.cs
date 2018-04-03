@@ -1,6 +1,6 @@
 ﻿using PersonalBlog.Data;
-using PersonalBlog.Models.Models;
 using PersonalBlog.Models.Reponses;
+using PersonalBlog.Models.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,7 +60,7 @@ namespace PersonalBlog.BLL
             return repo.GetById(id);
         }
 
-        public TagsResponse Add(Tags tag)
+        public TagsResponse Add(Tag tag)
         {
             var context = new PersonalBlogEntities();
 
@@ -78,7 +78,7 @@ namespace PersonalBlog.BLL
             }
         }
 
-        public TagsResponse Edit(Tags tag)
+        public TagsResponse Edit(Tag tag)
         {
             var context = new PersonalBlogEntities();
 
