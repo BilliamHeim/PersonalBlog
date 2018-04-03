@@ -1,0 +1,42 @@
+﻿@model PersonalBlog.Models.Tables.Post
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1>Blog</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1>@Html.Raw(Model.PostTitle)</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <p>@Html.Raw(Model.PostBody)</p>
+    </div>
+</div>
+    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+    {
+<div class="row text-center">
+    <div class="col-md-12 text-center">
+        @using (Html.BeginForm("EditPost", "Admin", FormMethod.Get))
+        {
+            <input type="hidden" name="id" value="@Model.PostId" />
+            <button type="submit" class="btn btn-warning">Edit</button>
+        }
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col-md-12 text-center">
+        @using (Html.BeginForm("DeletePost", "Admin", FormMethod.Post))
+        {
+            <input type="hidden" name="id" value="@Model.PostId" />
+            <button type="submit" class="btn btn-danger">Delete</button>
+        }
+    </div>
+</div>
+    }
+<hr />

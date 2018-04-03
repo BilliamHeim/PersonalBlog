@@ -167,11 +167,6 @@ namespace PersonalBlog.BLL
                 response.Success = false;
                 response.Message = "The post title cannot be left blank.";
             }
-            else if (post.CreatedDate < DateTime.Today.AddDays(1))
-            {
-                response.Success = false;
-                response.Message = "The post body cannot be left blank";
-            }
             else if (!post.IsApproved)
             {
                 response.Success = false;
@@ -191,7 +186,6 @@ namespace PersonalBlog.BLL
             {
                 response = repo.Edit(post);
                 response.Message = $"Your changes to \"{post.PostTitle}\" have been saved.";
-                response.Posts.Add(post);
             }
 
             return response;

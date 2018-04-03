@@ -29,9 +29,15 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("Search", "Search", "Home")</li>
-                    @if(Request.IsAuthenticated && User.IsInRole("Admin"))
+                    @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Admin Panel", "Panel", "Admin")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Admin")</li>
+                    }
+                    @if (Request.IsAuthenticated && User.IsInRole("Marketing"))
+                    {
+                        <li>@Html.ActionLink("Marketing Panel", "Panel", "Admin")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Admin")</li>
                     }
                 </ul>
             </div>

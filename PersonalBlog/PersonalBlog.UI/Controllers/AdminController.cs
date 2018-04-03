@@ -157,13 +157,13 @@ namespace PersonalBlog.UI.Controllers
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin, Marketing")]
 		public ActionResult AddPost()
 		{
 			PostSubmissionVM model = new PostSubmissionVM();
 			CategoriesManager manager = new CategoriesManager();
 			var allCategories = manager.GetAll();
-			foreach(var cat in allCategories.Categories)
+			foreach (var cat in allCategories.Categories)
 			{
 				model.Categories.Add(cat);
 			}
@@ -171,7 +171,7 @@ namespace PersonalBlog.UI.Controllers
 		}
 
 		[HttpPost, ValidateInput(false)]
-		[Authorize(Roles = "Admin")]
+		[Authorize(Roles = "Admin, Marketing")]
 		public ActionResult AddPost(PostSubmissionVM post, string Categories)
 		{
 			Post postSubmit = new Post();
@@ -200,13 +200,65 @@ namespace PersonalBlog.UI.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-		//[HttpGet]
-		//[Authorize(Roles = "Admin")]
-		//public ActionResult EditPost(string id)
-		//{
-		//	PostsManager manager = new PostsManager();
-		//	manager.
-		//	return View();
-		//}
+		[HttpGet]
+		[Authorize(Roles = "Admin")]
+		public ActionResult EditPost(string id)
+		{
+			PostsManager manager = new PostsManager();
+			var response = manager.GetById(int.Parse(id));
+			if (response.Success)
+			{
+				var model = response.Posts.First();
+				return View(model);
+			}
+			else
+			{
+				return RedirectToAction("Index", "Home");
+			}
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost, ValidateInput(false)]
+		public ActionResult UpdatePost(string id, string title, string body)
+		{
+			PostsManager manager = new PostsManager();
+			var response = manager.GetById(int.Parse(id));
+			var postToUpdate = response.Posts.First();
+			postToUpdate.PostTitle = title;
+			postToUpdate.PostBody = body;
+			manager.Edit(postToUpdate);
+			return RedirectToAction("Index", "Home");
+		}
+
+		[Authorize(Roles = "Admin, Marketing")]
+		[HttpGet]
+		public ActionResult Logout()
+		{
+			var AuthManager = HttpContext.GetOwinContext().Authentication;
+			AuthManager.SignOut();
+			return RedirectToAction("Index", "Home");
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpGet]
+		public ActionResult ApprovePosts()
+		{
+			PostsManager manager = new PostsManager();
+			var response = manager.GetByApproval(false);
+			var model = response.Posts;
+			return View(model);
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost]
+		public ActionResult ApprovePost(string id)
+		{
+			PostsManager manager = new PostsManager();
+			var response = manager.GetById(int.Parse(id));
+			var post = response.Posts.First();
+			post.IsApproved = true;
+			manager.Edit(post);
+			return RedirectToAction("Panel", "Admin");
+		}
 	}
 }

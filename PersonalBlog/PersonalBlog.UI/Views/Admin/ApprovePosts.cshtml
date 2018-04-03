@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<PersonalBlog.Models.Tables.Post>
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Home Page";
+    ViewBag.Title = "Approve Posts";
 }
 
 <div class="row">
@@ -48,6 +48,13 @@
         {
             <input type="hidden" name="id" , value="@post.PostId" />
             <button type="submit" class="btn btn-primary">Read More</button>
+        }
+    </div>
+    <div class="row text-center">
+        @using (Html.BeginForm("ApprovePost", "Admin", FormMethod.Post))
+        {
+            <input type="hidden" name="id" , value="@post.PostId" />
+            <button type="submit" class="btn btn-danger">Approve</button>
         }
     </div>
     <hr />

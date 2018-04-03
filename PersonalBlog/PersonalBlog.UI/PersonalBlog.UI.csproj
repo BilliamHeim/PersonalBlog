@@ -249,6 +249,9 @@
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Admin\AddPost.cshtml" />
+    <Content Include="Views\Admin\EditPost.cshtml" />
+    <Content Include="Views\Home\Post.cshtml" />
+    <Content Include="Views\Admin\ApprovePosts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
