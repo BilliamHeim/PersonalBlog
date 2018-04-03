@@ -205,5 +205,34 @@ namespace PersonalBlog.BLL
 
             return repo.Delete(id);
         }
+
+        public PostsResponse SearchPosts(int tagId,int catId)
+        {
+            PostsResponse response = new PostsResponse();
+            PostsResponse catSearchResult = repo.GetByCategory(catId);
+            PostsResponse tagSearchResult = repo.GetByTag(tagId);
+            if (!(catSearchResult.Success && tagSearchResult.Success))
+            {
+                response.Success = false;
+                response.Message = "No results found for either entered tags or category";
+                return response;
+            }
+            response.Posts = catSearchResult.Posts;
+            foreach (var post in response.Posts)
+            {
+                if (!tagSearchResult.Posts.Contains(post))
+                {
+                    tagSearchResult.Posts.Remove(post);
+                }
+            }
+            foreach(var post in tagSearchResult.Posts)
+            {
+                response.Posts.Add(post);
+            }
+            response.Success = true;
+            return response;
+
+            return response;
+        }
     }
 }
