@@ -231,8 +231,6 @@ namespace PersonalBlog.BLL
             }
             response.Success = true;
             return response;
-
-            return response;
         }
     }
 }
