@@ -18,6 +18,34 @@ namespace PersonalBlog.BLL
             return repo.GetAll();
         }
 
+        public PostsResponse GetById(int id)
+        {
+            PostsResponse response = new PostsResponse();
+            if (id == 0)
+            {
+                response.Success = false;
+                response.Message = "Id value was not passed in.";
+                return response;
+            }
+            try
+            {
+                response = repo.GetById(id);
+                if (response.Posts.Count == 0 || response.Posts.First() == null)
+                {
+                    response.Success = false;
+                    response.Message = "No posts found";
+                }
+                response.Success = true;
+            }
+            catch(Exception ex)
+            {
+                response.Success = true;
+                response.Message = ex.Message;
+            }
+            return response;
+
+        }
+
         public PostsResponse GetByTag(int tagId)
         {
             var context = new PersonalBlogEntities();
