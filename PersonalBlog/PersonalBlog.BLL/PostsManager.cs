@@ -123,7 +123,7 @@ namespace PersonalBlog.BLL
             else if(post.CreatedDate < DateTime.Today.AddDays(1))
             {
                 response.Success = false;
-                response.Message = "The post body cannot be left blank";
+                response.Message = "The post cannot have a creation date before the current date.";
             }
             //else if (!post.IsApproved)
             //{

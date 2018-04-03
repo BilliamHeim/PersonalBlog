@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -179,7 +180,17 @@ namespace PersonalBlog.UI.Controllers
 			postSubmit.PostBody = post.Body;
 			postSubmit.PostTitle = post.Title;
 			PostsManager manager = new PostsManager();
-			if (User.IsInRole("Admin"))
+
+            Post virtaPost = postSubmit;
+            virtaPost.PostId = manager.GetAll().Posts.Count() + 1;
+            var regex = new Regex(@"(?<=#)\w+");
+            var matches = regex.Matches(post.Body);
+            foreach (Match m in matches)
+            {
+                Tag pTag = new Tag { TagName = "#"+m.Value, Posts = new List<Post> { virtaPost } };
+            }
+
+            if (User.IsInRole("Admin"))
 			{
 				postSubmit.IsApproved = true;
 			}
