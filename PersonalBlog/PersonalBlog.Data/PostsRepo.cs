@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -87,7 +90,7 @@ namespace PersonalBlog.Data
                 {
                     response.Posts = context.Posts
                         .Include("Tags")
-                        .Where(p=>p.Tags.Any(t=>t.TagId==tagId))
+                        .Where(p => p.Tags.Any(t => t.TagId == tagId))
                         .ToList();
                     if (response.Posts.Count == 0)
                     {
@@ -110,14 +113,14 @@ namespace PersonalBlog.Data
         public PostsResponse GetByApproval(bool isApproved)
         {
             PostsResponse response = new PostsResponse();
-            
+
             using (var context = new PersonalBlogEntities())
             {
                 try
                 {
                     response.Posts = context.Posts
                         .Include("Tags")
-                        .Where(p=>p.IsApproved==isApproved)
+                        .Where(p => p.IsApproved == isApproved)
                         .ToList();
                     if (response.Posts.Count == 0)
                     {
@@ -191,7 +194,7 @@ namespace PersonalBlog.Data
                 {
                     response.Posts = context.Posts
                         .Include("Tags")
-                        .Where(p => p.CategoryId==catId)
+                        .Where(p => p.CategoryId == catId)
                         .ToList();
                     if (response.Posts.Count == 0)
                     {
@@ -224,7 +227,7 @@ namespace PersonalBlog.Data
                     response.Success = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.Success = false;
                 response.Message = ex.Message;
@@ -232,14 +235,14 @@ namespace PersonalBlog.Data
 
             return response;
         }
-        
+
         public PostsResponse Edit(Post post)
         {
             PostsResponse response = new PostsResponse();
 
             try
             {
-                using (var context=new PersonalBlogEntities())
+                using (var context = new PersonalBlogEntities())
                 {
                     var toEdit = context.Posts.Where(p => p.PostId == post.PostId).First();
 
@@ -254,13 +257,13 @@ namespace PersonalBlog.Data
 
                     context.SaveChanges();
 
-                    toEdit.Tags= context.Tags.AsEnumerable().Where(t => post.Tags.Any(postTag => postTag.TagId == t.TagId)).ToList();
-                    
+                    toEdit.Tags = context.Tags.AsEnumerable().Where(t => post.Tags.Any(postTag => postTag.TagId == t.TagId)).ToList();
+
                     context.SaveChanges();
                     response.Success = true;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.Success = false;
                 response.Message = ex.Message;
@@ -275,15 +278,22 @@ namespace PersonalBlog.Data
 
             try
             {
-                using (var context = new PersonalBlogEntities())
+                using (SqlConnection conn = new SqlConnection())
                 {
-                    var toDelete = context.Posts.Where(p => p.PostId == postId).First();
-                    context.Posts.Remove(toDelete);
-                    context.SaveChanges();
-                    response.Success = true;
+                    conn.ConnectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = conn;
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandText = "DeletePost";
+                    cmd.Parameters.AddWithValue("@PostId", postId);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
                 }
+                response.Success = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 response.Success = false;
                 response.Message = ex.Message;
