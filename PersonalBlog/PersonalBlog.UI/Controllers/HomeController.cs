@@ -1,4 +1,5 @@
 ﻿using PersonalBlog.BLL;
+using PersonalBlog.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,14 @@ namespace PersonalBlog.UI.Controllers
 
 		public ActionResult Search()
 		{
-			return View();
+			PostSubmissionVM model = new PostSubmissionVM();
+			CategoriesManager manager = new CategoriesManager();
+			var allCategories = manager.GetAll();
+			foreach (var cat in allCategories.Categories)
+			{
+				model.Categories.Add(cat);
+			}
+			return View(model);
 		}
 	}
 }

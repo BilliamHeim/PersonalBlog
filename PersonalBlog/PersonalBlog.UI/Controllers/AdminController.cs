@@ -187,7 +187,7 @@ namespace PersonalBlog.UI.Controllers
             var matches = regex.Matches(post.Body);
             foreach (Match m in matches)
             {
-                Tag pTag = new Tag { TagName = "#"+m.Value, Posts = new List<Post> { virtaPost } };
+                postSubmit.Tags.Add(new Tag { TagName = "#"+m.Value, Posts = new List<Post> { virtaPost } });
             }
 
             if (User.IsInRole("Admin"))
