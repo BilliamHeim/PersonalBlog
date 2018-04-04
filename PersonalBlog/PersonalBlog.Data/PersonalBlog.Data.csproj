@@ -51,6 +51,7 @@
     <Compile Include="CategoriesRepo.cs" />
     <Compile Include="PostsRepo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticPgRepo.cs" />
     <Compile Include="TagsRepo.cs" />
   </ItemGroup>
   <ItemGroup>

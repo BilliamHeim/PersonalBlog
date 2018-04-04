@@ -52,6 +52,7 @@
     <Compile Include="CategoriesManager.cs" />
     <Compile Include="PostsManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticPgManager.cs" />
     <Compile Include="TagsManager.cs" />
   </ItemGroup>
   <ItemGroup>
