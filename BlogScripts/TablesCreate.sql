@@ -16,11 +16,19 @@ DROP TABLE PostTags
 IF EXISTS(SELECT * FROM sys.tables WHERE Name='Tags')
 DROP TABLE Tags
 
+IF EXISTS(SELECT * FROM sys.tables WHERE Name='Posts')
+DROP TABLE Posts
+
 IF EXISTS(SELECT * FROM sys.tables WHERE Name='Categories')
 DROP TABLE Categories
 
-IF EXISTS(SELECT * FROM sys.tables WHERE Name='Posts')
-DROP TABLE Posts
+IF EXISTS(SELECT * FROM sys.tables WHERE Name='StaticPages')
+DROP TABLE StaticPages
+
+CREATE TABLE StaticPages(
+StaticPageId INT PRIMARY KEY IDENTITY,
+PageBody NVARCHAR(MAX) NOT NULL
+)
 
 CREATE TABLE Categories(
 CategoryId INT PRIMARY KEY IDENTITY,

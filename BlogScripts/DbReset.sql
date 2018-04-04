@@ -12,6 +12,10 @@ BEGIN
 
 	EXEC dbo.TableSetup;
 
+	INSERT INTO StaticPages
+	VALUES  ('Hello world, I''m a disclaimer!'),
+			('Hello world, I just wanna talk about me')
+
 	INSERT INTO Categories
 	VALUES('Tech'),
 	('Videogames'),
