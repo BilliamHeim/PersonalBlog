@@ -1,8 +1,13 @@
-﻿
+﻿@model PersonalBlog.UI.Models.PostSubmissionVM
 @{
     ViewBag.Title = "Search";
 }
 
-<h2>Search</h2>
-Add text box for searching
+@Html.DropDownListFor(f => f.Categories, new SelectList(Model.Categories, "CategoryId", "CategoryName", "SelectedValue"))
+<input id="searchTag" type="text" class="form-control" name="tag" />
+<button id="submitButton" type="submit" class="btn btn-success">Search</button>
+
+<div class="row contentRows">
+    
+</div>
 
