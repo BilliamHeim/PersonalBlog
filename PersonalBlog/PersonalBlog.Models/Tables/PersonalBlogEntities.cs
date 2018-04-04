@@ -15,6 +15,7 @@ namespace PersonalBlog.Models.Tables
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<StaticPage> StaticPages { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
