@@ -44,5 +44,21 @@ namespace PersonalBlog.UI.Controllers
 			}
 			return View(model);
 		}
+
+		public ActionResult Disclaimer()
+		{
+			StaticPgManager manager = new StaticPgManager();
+			var tempmodel = manager.GetById(1);
+			var model = tempmodel.StaticPage;
+			return View(model);
+		}
+
+		public ActionResult About()
+		{
+			StaticPgManager manager = new StaticPgManager();
+			var tempmodel = manager.GetById(2);
+			var model = tempmodel.StaticPage;
+			return View(model);
+		}
 	}
 }

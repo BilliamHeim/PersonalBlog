@@ -47,7 +47,17 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <div class="row">
+                <div class="col-md-4 text-left">
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </div>
+                <div class="col-md-4 text-right">
+                    <p>@Html.ActionLink("Disclaimer", "Disclaimer", "Home")</p>
+                </div>
+                <div class="col-md-4 text-left">
+                    <p>@Html.ActionLink("About", "About", "Home")</p>
+                </div>
+            </div>            
         </footer>
     </div>
 

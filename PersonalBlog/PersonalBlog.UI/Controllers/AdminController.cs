@@ -271,5 +271,45 @@ namespace PersonalBlog.UI.Controllers
 			manager.Edit(post);
 			return RedirectToAction("Panel", "Admin");
 		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpGet]
+		public ActionResult EditDisclaimer()
+		{
+			StaticPgManager manager = new StaticPgManager();
+			var tempmodel = manager.GetById(1);
+			var model = tempmodel.StaticPage;
+			return View(model);
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost]
+		public ActionResult EditDisclaimer(StaticPage page, string disclaimerId)
+		{
+			page.StaticPageId = int.Parse(disclaimerId);
+			StaticPgManager manager = new StaticPgManager();
+			manager.Edit(page);
+			return RedirectToAction("Disclaimer", "Home");
+		}
+		//
+		[Authorize(Roles = "Admin")]
+		[HttpGet]
+		public ActionResult EditAbout()
+		{
+			StaticPgManager manager = new StaticPgManager();
+			var tempmodel = manager.GetById(2);
+			var model = tempmodel.StaticPage;
+			return View(model);
+		}
+
+		[Authorize(Roles = "Admin")]
+		[HttpPost]
+		public ActionResult EditAbout(StaticPage page, string id)
+		{
+			page.StaticPageId = int.Parse(id);
+			StaticPgManager manager = new StaticPgManager();
+			manager.Edit(page);
+			return RedirectToAction("About", "Home");
+		}
 	}
 }
