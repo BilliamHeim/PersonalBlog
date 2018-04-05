@@ -2,6 +2,8 @@
 using PersonalBlog.Models.Tables;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,7 +59,10 @@ namespace PersonalBlog.Data
                 {
                     StaticPage toEdit = GetById(page.StaticPageId).StaticPage;
                     toEdit.PageBody = page.PageBody;
+                    DbEntityEntry entry = context.Entry(toEdit);
+                    entry.State = EntityState.Modified;
                     context.SaveChanges();
+                    response.Success = true;
                 }
                 catch (Exception ex)
                 {
